@@ -4,8 +4,8 @@ import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
-import ru.novbicreate.features.jokes.TranslateJoke
 import ru.novbicreate.features.metric.MetricService
+import ru.novbicreate.features.translater.models.TranslateResponse
 import ru.novbicreate.utils.ApiRoutes
 
 class TranslateService(private val language: String?, private val client: HttpClient) {
@@ -17,7 +17,7 @@ class TranslateService(private val language: String?, private val client: HttpCl
                 parameter("q", text)
                 parameter("langpair", "eu|${getLanguageCode(language)}")
             }
-            val translateJoke: TranslateJoke = translateResponse.body()
+            val translateJoke: TranslateResponse = translateResponse.body()
             return translateJoke.responseData.translatedText
         } catch (e: Exception) {
             e.printStackTrace()
