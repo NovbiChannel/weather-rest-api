@@ -60,6 +60,7 @@ class WeatherController(private val applicationCall: ApplicationCall) {
     private suspend fun respondWithWeatherData(weatherData: WeatherResponse, language: String?) {
         val city = weatherData.name
         val weatherConditions = weatherData.weather.map { it.description }
+        val conditionEmoji = getEmojiCondition(weatherConditions.first())
         val translationInput = "$city; ${weatherConditions.joinToString("; ")}"
         val translationService = TranslateService(language, _httpClient)
         val translatedText = translationService.translateText(translationInput)?: translationInput
@@ -68,6 +69,7 @@ class WeatherController(private val applicationCall: ApplicationCall) {
         applicationCall.respond(WeatherRespond(
             city = translatedParts.first(),
             conditions = translatedParts.last(),
+            conditionsEmoji = conditionEmoji?: "",
             temperature = currentTemperatureCelsius,
             humidity = weatherData.main.humidity,
             windSpeed = weatherData.wind?.speed?.toInt()
@@ -91,6 +93,21 @@ class WeatherController(private val applicationCall: ApplicationCall) {
             parameter(APP_ID_PARAM, _weatherApiKey)
         }
         return weatherResponse.body()
+    }
+
+    private fun getEmojiCondition(condition: String): String? {
+        val conditions = listOf(
+            Pair("clear sky", "☀\uFE0F"),
+            Pair("few clouds", "\uD83C\uDF24"),
+            Pair("scattered clouds", "\uD83C\uDF25"),
+            Pair("broken clouds", "☁\uFE0F"),
+            Pair("shower rain", "\uD83C\uDF27"),
+            Pair("rain", "\uD83C\uDF26"),
+            Pair("thunderstorm", "\uD83C\uDF29"),
+            Pair("snow", "❄\uFE0F"),
+            Pair("mist", "\uD83D\uDE36\u200D\uD83C\uDF2B\uFE0F")
+        )
+        return conditions.find { it.first == condition }?.second
     }
 
     private fun kelvinToCelsius(kelvin: Double) = kelvin - 273.15
