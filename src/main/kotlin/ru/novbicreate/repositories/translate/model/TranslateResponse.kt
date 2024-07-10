@@ -1,4 +1,4 @@
-package ru.novbicreate.features.translater.models
+package ru.novbicreate.repositories.translate.model
 
 import kotlinx.serialization.Serializable
 

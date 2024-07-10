@@ -1,6 +1,7 @@
 [versions]
 kotlin = "2.0.0"
 ktor = "2.3.12"
+koin = "3.6.0-wasm-alpha2"
 logback = "1.4.14"
 
 [libraries]
@@ -16,6 +17,9 @@ io-ktor-client-contentNegotiation = { module = "io.ktor:ktor-client-content-nego
 
 #ktor-common
 io-ktor-common-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
+
+#koin
+koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 
 #logback
 ch-qos-logback = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }

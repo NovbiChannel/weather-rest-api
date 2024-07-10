@@ -1,4 +1,4 @@
-package ru.novbicreate.features.metric
+package ru.novbicreate.repositories.metric.model
 
 import kotlinx.serialization.Serializable
 

@@ -26,5 +26,6 @@ dependencies {
     implementation(libs.io.ktor.client.cio)
     implementation(libs.io.ktor.client.contentNegotiation)
     implementation(libs.io.ktor.common.serialization.kotlinx.json)
+    implementation(libs.koin.core)
     implementation(libs.ch.qos.logback)
 }
