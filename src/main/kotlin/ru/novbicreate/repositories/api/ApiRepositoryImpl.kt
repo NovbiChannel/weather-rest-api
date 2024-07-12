@@ -82,6 +82,7 @@ class ApiRepositoryImpl(private val client: HttpClient): ApiRepository, KoinComp
             Pair("few clouds", "\uD83C\uDF24"),
             Pair("scattered clouds", "\uD83C\uDF25"),
             Pair("broken clouds", "☁\uFE0F"),
+            Pair("overcast clouds", "☁\uFE0F"),
             Pair("shower rain", "\uD83C\uDF27"),
             Pair("rain", "\uD83C\uDF26"),
             Pair("thunderstorm", "\uD83C\uDF29"),
