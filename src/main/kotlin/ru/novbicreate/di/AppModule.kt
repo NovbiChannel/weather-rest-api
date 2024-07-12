@@ -13,52 +13,19 @@ import ru.novbicreate.repositories.metric.MetricRepositoryImpl
 import ru.novbicreate.repositories.translate.TranslateRepository
 import ru.novbicreate.repositories.translate.TranslateRepositoryImpl
 
-val servicesModule = module {
-    single<MetricRepository> {
-        MetricRepositoryImpl (
-            client = HttpClient(CIO) {
-                install(ContentNegotiation) {
-                    json(
-                        Json {
-                            prettyPrint = true
-                            isLenient = true
-                            ignoreUnknownKeys = true
-                        }
-                    )
+val appModule = module {
+    single <HttpClient> { HttpClient(CIO) {
+        install(ContentNegotiation) {
+            json(
+                Json {
+                    prettyPrint = true
+                    isLenient = true
+                    ignoreUnknownKeys = true
                 }
-            }
-        )
-    }
-    single<TranslateRepository> {
-        TranslateRepositoryImpl (
-            client = HttpClient(CIO) {
-                install(ContentNegotiation) {
-                    json(
-                        Json {
-                            prettyPrint = true
-                            isLenient = true
-                            ignoreUnknownKeys = true
-                        }
-                    )
-                }
-            }
-        )
-    }
-}
-val apiModule = module {
-    single<ApiRepository> {
-        ApiRepositoryImpl (
-            client = HttpClient(CIO) {
-                install(ContentNegotiation) {
-                    json(
-                        Json {
-                            prettyPrint = true
-                            isLenient = true
-                            ignoreUnknownKeys = true
-                        }
-                    )
-                }
-            }
-        )
-    }
+            )
+        }
+    } }
+    single<ApiRepository> { ApiRepositoryImpl (get<HttpClient>()) }
+    single<MetricRepository> { MetricRepositoryImpl (get<HttpClient>()) }
+    single<TranslateRepository> { TranslateRepositoryImpl (get<HttpClient>()) }
 }
